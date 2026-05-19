@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Patient Portal — LifeCare Hospital</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  body { background: #f8fafc; }
+  .portal-header {
+    background: linear-gradient(135deg, var(--primary), #0077cc);
+    padding: 2rem;
+    color: white;
+    text-align: center;
+  }
+  .portal-header h1 { margin-bottom: 0.5rem; }
+  
+  .portal-container {
+    max-width: 1000px;
+    margin: -3rem auto 3rem;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 10;
+  }
+  
+  .portal-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    padding: 2rem;
+  }
+  
+  .portal-tabs {
+    display: flex;
+    gap: 1rem;
+    border-bottom: 2px solid #edf2f7;
+    margin-bottom: 2rem;
+  }
+  .portal-tab {
+    padding: 1rem 2rem;
+    font-weight: 600;
+    color: var(--text2);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+  }
+  .portal-tab.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+  }
+  
+  .booking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .booking-item {
+    border: 1px solid #edf2f7;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    background: #fff;
+  }
+  .booking-item:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+  }
+  
+  .booking-info h4 {
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+  .booking-info p {
+    color: var(--text3);
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+  }
+  
+  .booking-status {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    background: #e6f4ea;
+    color: #137333;
+  }
+  
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text3);
+  }
+  .empty-state-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+  .btn-back {
+    display: inline-block;
+    margin-top: 1rem;
+    color: white;
+    text-decoration: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="portal-header">
+  <div style="width:50px;height:50px;border-radius:12px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.5rem;margin:0 auto 1rem;">L+</div>
+  <h1>Patient Portal</h1>
+  <p>Manage your appointments and health records</p>
+  <a href="HOSP.html" class="btn-back">← Back to Home</a>
+</div>
+
+<div class="portal-container">
+  <div class="portal-card">
+    <div class="portal-tabs">
+      <div class="portal-tab active">My Appointments</div>
+      <div class="portal-tab">Test Reports</div>
+      <div class="portal-tab">Prescriptions</div>
+    </div>
+    
+    <div id="bookingsContainer" class="booking-list">
+      <!-- Bookings will be loaded here via JS -->
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    loadBookings();
+});
+
+function loadBookings() {
+    const container = document.getElementById('bookingsContainer');
+    const bookings = JSON.parse(localStorage.getItem('lifecare_bookings')) || [];
+    
+    if (bookings.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">📅</div>
+                <h3>No Appointments Yet</h3>
+                <p>You haven't booked any appointments.</p>
+                <a href="HOSP.html#find-doctor" style="margin-top:1rem;display:inline-block;padding:.8rem 1.5rem;background:var(--primary);color:white;border-radius:8px;text-decoration:none;font-weight:600;">Book Now</a>
+            </div>
+        `;
+        return;
+    }
+    
+    // Sort bookings by date, newest first
+    bookings.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+    
+    container.innerHTML = bookings.map(b => {
+        const d = new Date(b.date).toLocaleDateString('en-GB', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+        return `
+            <div class="booking-item">
+                <div class="booking-info">
+                    <h4>${b.department}</h4>
+                    <p><strong>Patient:</strong> ${b.patientName} &nbsp;|&nbsp; <strong>ID:</strong> ${b.id}</p>
+                    <p>📅 ${d} &nbsp;&nbsp; 🕒 ${b.slot}</p>
+                </div>
+                <div class="booking-status">${b.status}</div>
+            </div>
+        `;
+    }).join('');
+}
+</script>
+
+</body>
+</html>
