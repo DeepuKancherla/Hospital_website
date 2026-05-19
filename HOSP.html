@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>LifeCare Hospital — Advanced Multi-Specialty Healthcare</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet"/>
+<style>
+/* ===== RESET & VARIABLES ===== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;font-size:16px;}
+:root{
+  --primary:#0057A8;
+  --primary-dark:#003d7a;
+  --primary-light:#E8F2FF;
+  --accent:#00A86B;
+  --accent-dark:#007a4d;
+  --accent-light:#E6F7F1;
+  --red:#E53935;
+  --red-light:#FFF0F0;
+  --orange:#F57C00;
+  --gold:#D4A017;
+  --white:#FFFFFF;
+  --bg:#F5F8FF;
+  --bg2:#F0F7F4;
+  --text:#0D1B2A;
+  --text2:#3A4A5C;
+  --text3:#6B7C93;
+  --border:#DDE6F0;
+  --border2:#C5D8F0;
+  --shadow1:0 2px 8px rgba(0,87,168,0.08);
+  --shadow2:0 8px 32px rgba(0,87,168,0.12);
+  --shadow3:0 20px 60px rgba(0,87,168,0.16);
+  --font:'Plus Jakarta Sans',sans-serif;
+  --serif:'Lora',Georgia,serif;
+  --r4:4px;--r8:8px;--r12:12px;--r16:16px;--r24:24px;--r100:100px;
+}
+body{font-family:var(--font);color:var(--text);background:var(--white);overflow-x:hidden;line-height:1.6;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;}
+button{font-family:var(--font);cursor:pointer;}
+input,select,textarea{font-family:var(--font);}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:#f0f4f8;}
+::-webkit-scrollbar-thumb{background:var(--primary);border-radius:4px;}
+
+/* ===== TOP INFO BAR ===== */
+.topbar{
+  background:var(--primary-dark);
+  padding:8px 5%;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:.78rem;color:rgba(255,255,255,.75);
+}
+.topbar-left{display:flex;gap:1.8rem;align-items:center;}
+.topbar-left span{display:flex;align-items:center;gap:5px;}
+.topbar-right{display:flex;gap:1.2rem;align-items:center;}
+.topbar-right a{color:rgba(255,255,255,.75);transition:color .2s;}
+.topbar-right a:hover{color:#fff;}
+.topbar-emergency{
+  background:var(--red);color:#fff!important;
+  padding:5px 14px;border-radius:var(--r100);
+  font-weight:700;letter-spacing:.04em;
+  display:flex;align-items:center;gap:5px;
+  animation:pulse-border 2s infinite;
+}
+@keyframes pulse-border{0%,100%{box-shadow:0 0 0 0 rgba(229,57,53,0.4);}50%{box-shadow:0 0 0 6px rgba(229,57,53,0);}}
+
+/* ===== MAIN NAV ===== */
+#navbar{
+  position:sticky;top:0;z-index:1000;
+  background:#fff;
+  box-shadow:var(--shadow1);
+  border-bottom:1px solid var(--border);
+  transition:box-shadow .3s;
+}
+#navbar.scrolled{box-shadow:var(--shadow2);}
+.nav-inner{
+  padding:0 5%;max-width:1400px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  height:70px;
+}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-icon{
+  width:42px;height:42px;border-radius:var(--r12);
+  background:linear-gradient(135deg,var(--primary),#0077cc);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:1.2rem;font-weight:800;
+  box-shadow:0 4px 12px rgba(0,87,168,0.3);
+}
+.logo-text{line-height:1.1;}
+.logo-text .name{font-size:1.1rem;font-weight:800;color:var(--primary);letter-spacing:-.01em;}
+.logo-text .tag{font-size:.68rem;color:var(--text3);font-weight:500;letter-spacing:.06em;text-transform:uppercase;}
+.nav-menu{display:flex;align-items:center;gap:.2rem;list-style:none;}
+.nav-menu>li{position:relative;}
+.nav-menu>li>a{
+  display:flex;align-items:center;gap:4px;
+  padding:8px 14px;border-radius:var(--r8);
+  font-size:.875rem;font-weight:600;color:var(--text2);
+  transition:all .2s;white-space:nowrap;
+}
+.nav-menu>li>a:hover,.nav-menu>li>a.active{color:var(--primary);background:var(--primary-light);}
+.nav-menu>li>a .arrow{font-size:.65rem;transition:transform .2s;}
+.nav-menu>li:hover>a .arrow{transform:rotate(180deg);}
+/* Dropdown */
+.dropdown{
+  position:absolute;top:calc(100% + 8px);left:0;
+  background:#fff;border:1px solid var(--border);border-radius:var(--r16);
+  box-shadow:var(--shadow3);min-width:240px;
+  padding:.6rem;z-index:200;
+  opacity:0;pointer-events:none;transform:translateY(-8px);
+  transition:all .25s ease;
+}
+.nav-menu>li:hover .dropdown{opacity:1;pointer-events:all;transform:translateY(0);}
+.dropdown a{
+  display:flex;align-items:center;gap:10px;
+  padding:.7rem 1rem;border-radius:var(--r8);
+  font-size:.85rem;font-weight:500;color:var(--text2);
+  transition:all .2s;
+}
+.dropdown a:hover{background:var(--primary-light);color:var(--primary);}
+.dropdown a .d-icon{font-size:1.1rem;width:28px;text-align:center;}
+.nav-actions{display:flex;gap:.8rem;align-items:center;}
+.btn-search{
+  width:38px;height:38px;border-radius:var(--r8);
+  background:var(--bg);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;transition:all .2s;
+  cursor:pointer;
+}
+.btn-search:hover{background:var(--primary-light);border-color:var(--primary);}
+.btn-appt{
+  padding:10px 22px;border-radius:var(--r100);
+  background:var(--primary);color:#fff;
+  font-size:.85rem;font-weight:700;
+  border:none;transition:all .2s;
+  box-shadow:0 4px 16px rgba(0,87,168,0.25);
+}
+.btn-appt:hover{background:var(--primary-dark);transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,87,168,0.35);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:5px;}
+.hamburger span{width:24px;height:2px;background:var(--text);border-radius:2px;transition:all .3s;}
+
+/* ===== SEARCH OVERLAY ===== */
+#search-overlay{
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(0,0,0,.6);backdrop-filter:blur(8px);
+  display:flex;align-items:flex-start;justify-content:center;
+  padding-top:80px;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+#search-overlay.open{opacity:1;pointer-events:all;}
+.search-box{
+  background:#fff;border-radius:var(--r24);
+  width:min(680px,90vw);padding:1.8rem;
+  box-shadow:var(--shadow3);
+  transform:translateY(-20px);transition:transform .3s;
+}
+#search-overlay.open .search-box{transform:translateY(0);}
+.search-input-wrap{
+  display:flex;gap:10px;margin-bottom:1.2rem;
+}
+.search-input-wrap input{
+  flex:1;padding:14px 18px;border-radius:var(--r12);
+  border:2px solid var(--border2);font-size:1rem;outline:none;
+  transition:border-color .2s;
+}
+.search-input-wrap input:focus{border-color:var(--primary);}
+.search-input-wrap button{
+  padding:14px 22px;border-radius:var(--r12);
+  background:var(--primary);color:#fff;border:none;
+  font-size:.9rem;font-weight:700;
+}
+.search-quick{display:flex;flex-wrap:wrap;gap:.5rem;}
+.search-quick span{font-size:.78rem;color:var(--text3);margin-right:.3rem;}
+.search-tag{
+  padding:5px 12px;border-radius:var(--r100);
+  border:1px solid var(--border2);font-size:.8rem;
+  color:var(--text2);cursor:pointer;transition:all .2s;background:#fff;
+}
+.search-tag:hover{background:var(--primary-light);border-color:var(--primary);color:var(--primary);}
+.search-results{margin-top:1rem;display:none;}
+.search-result-item{
+  display:flex;align-items:center;gap:12px;
+  padding:.8rem 1rem;border-radius:var(--r8);
+  cursor:pointer;transition:background .2s;
+}
+.search-result-item:hover{background:var(--bg);}
+.sr-icon{width:36px;height:36px;border-radius:var(--r8);background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.sr-text h5{font-size:.88rem;font-weight:600;color:var(--text);}
+.sr-text span{font-size:.76rem;color:var(--text3);}
+
+/* ===== HERO ===== */
+#hero{
+  background:linear-gradient(135deg,#001f4d 0%,#003380 35%,#0057a8 65%,#0080cc 100%);
+  min-height:88vh;position:relative;overflow:hidden;
+  display:flex;align-items:center;
+}
+.hero-pattern{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(circle at 20% 50%, rgba(255,255,255,.04) 1px,transparent 1px),
+    radial-gradient(circle at 80% 20%, rgba(0,168,107,.12) 200px,transparent 400px),
+    radial-gradient(circle at 90% 80%, rgba(255,255,255,.06) 150px,transparent 300px);
+  background-size:40px 40px,100% 100%,100% 100%;
+}
+.hero-content{
+  position:relative;z-index:1;max-width:1400px;
+  margin:0 auto;padding:80px 5%;
+  display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;
+}
+.hero-left{}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(0,168,107,.15);border:1px solid rgba(0,168,107,.3);
+  border-radius:var(--r100);padding:6px 16px;
+  font-size:.75rem;font-weight:700;color:#4dffc3;
+  letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:1.5rem;
+}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:#4dffc3;animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;};}
+.hero-title{
+  font-family:var(--serif);
+  font-size:clamp(2.4rem,5vw,4rem);
+  font-weight:600;line-height:1.15;color:#fff;
+  margin-bottom:1.2rem;
+}
+.hero-title em{font-style:italic;color:#7dd3fc;}
+.hero-subtitle{
+  font-size:1.05rem;color:rgba(255,255,255,.65);
+  line-height:1.8;max-width:480px;margin-bottom:2.5rem;font-weight:400;
+}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem;}
+.btn-white{
+  padding:14px 30px;border-radius:var(--r100);
+  background:#fff;color:var(--primary);
+  font-size:.9rem;font-weight:700;border:none;
+  transition:all .2s;
+  box-shadow:0 6px 24px rgba(0,0,0,.2);
+}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,0,0,.25);}
+.btn-outline-white{
+  padding:14px 30px;border-radius:var(--r100);
+  border:2px solid rgba(255,255,255,.35);
+  color:#fff;font-size:.9rem;font-weight:600;
+  background:transparent;transition:all .2s;
+}
+.btn-outline-white:hover{border-color:#fff;background:rgba(255,255,255,.08);}
+.hero-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:rgba(255,255,255,.1);border-radius:var(--r16);overflow:hidden;
+}
+.hero-stat{
+  background:rgba(255,255,255,.06);backdrop-filter:blur(10px);
+  padding:1.2rem;text-align:center;
+}
+.hero-stat-n{font-family:var(--serif);font-size:1.9rem;font-weight:600;color:#7dd3fc;line-height:1;}
+.hero-stat-l{font-size:.72rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;margin-top:.3rem;}
+/* Hero Right — Quick actions panel */
+.hero-right{}
+.quick-panel{
+  background:rgba(255,255,255,.97);border-radius:var(--r24);
+  padding:1.8rem;box-shadow:0 24px 80px rgba(0,0,0,.25);
+}
+.quick-panel-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1.4rem;
+  padding-bottom:1rem;border-bottom:1px solid var(--border);
+}
+.quick-panel-header h3{font-size:1rem;font-weight:700;color:var(--text);}
+.quick-panel-header .live-badge{
+  display:flex;align-items:center;gap:5px;
+  font-size:.72rem;font-weight:600;color:var(--accent);
+}
+.quick-panel-header .live-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;}
+.qp-tabs{display:flex;gap:.4rem;margin-bottom:1.2rem;}
+.qp-tab{
+  flex:1;padding:9px;border-radius:var(--r8);
+  border:1.5px solid var(--border);background:#fff;
+  font-size:.8rem;font-weight:600;color:var(--text3);
+  transition:all .2s;cursor:pointer;
+}
+.qp-tab.active{background:var(--primary);border-color:var(--primary);color:#fff;}
+.qp-form{display:flex;flex-direction:column;gap:.8rem;}
+.qp-form select,.qp-form input{
+  width:100%;padding:11px 14px;border-radius:var(--r8);
+  border:1.5px solid var(--border);font-size:.88rem;
+  color:var(--text);outline:none;transition:border-color .2s;
+  background:#fff;
+}
+.qp-form select:focus,.qp-form input:focus{border-color:var(--primary);}
+.qp-submit{
+  width:100%;padding:13px;border-radius:var(--r12);
+  background:linear-gradient(135deg,var(--primary),#0077cc);
+  border:none;color:#fff;font-size:.9rem;font-weight:700;
+  transition:all .2s;
+  box-shadow:0 4px 16px rgba(0,87,168,.3);
+}
+.qp-submit:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,87,168,.4);}
+.qp-links{
+  display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.8rem;
+}
+.qp-link{
+  display:flex;align-items:center;gap:8px;
+  padding:.75rem;border-radius:var(--r8);
+  border:1px solid var(--border);background:#fff;
+  font-size:.8rem;font-weight:600;color:var(--text2);
+  transition:all .2s;cursor:pointer;
+}
+.qp-link:hover{background:var(--primary-light);border-color:var(--primary);color:var(--primary);}
+.qp-link-icon{font-size:1.1rem;}
+
+/* ===== SERVICES STRIP ===== */
+.services-strip{
+  background:#fff;border-bottom:1px solid var(--border);
+  padding:0 5%;overflow-x:auto;
+  scrollbar-width:none;
+}
+.services-strip::-webkit-scrollbar{display:none;}
+.services-strip-inner{
+  display:flex;gap:0;max-width:1400px;margin:0 auto;
+  min-width:max-content;
+}
+.strip-item{
+  display:flex;align-items:center;gap:8px;
+  padding:1rem 1.5rem;
+  border-right:1px solid var(--border);
+  font-size:.82rem;font-weight:600;color:var(--text3);
+  cursor:pointer;transition:all .2s;white-space:nowrap;
+}
+.strip-item:hover,.strip-item.active{color:var(--primary);background:var(--primary-light);}
+.strip-item-icon{font-size:1.1rem;}
+
+/* ===== SECTIONS SHARED ===== */
+.section{padding:80px 5%;}
+.section-inner{max-width:1400px;margin:0 auto;}
+.section-header{margin-bottom:3rem;}
+.section-label{
+  font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--primary);display:flex;align-items:center;gap:8px;margin-bottom:.6rem;
+}
+.section-label::before{content:'';width:16px;height:2px;background:var(--primary);border-radius:2px;}
+.section-title{
+  font-family:var(--serif);
+  font-size:clamp(1.8rem,3.5vw,2.8rem);
+  font-weight:600;color:var(--text);line-height:1.2;
+  margin-bottom:.8rem;
+}
+.section-title em{font-style:italic;color:var(--primary);}
+.section-desc{font-size:.95rem;color:var(--text3);max-width:540px;line-height:1.8;}
+.section-header-row{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;}
+.view-all{
+  padding:10px 22px;border-radius:var(--r100);
+  border:1.5px solid var(--border2);
+  font-size:.82rem;font-weight:700;color:var(--primary);
+  white-space:nowrap;transition:all .2s;background:#fff;
+}
+.view-all:hover{background:var(--primary);border-color:var(--primary);color:#fff;}
+
+/* ===== DEPARTMENTS ===== */
+#departments{background:var(--bg);}
+.dept-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem;}
+.dept-tab{
+  padding:8px 18px;border-radius:var(--r100);
+  border:1.5px solid var(--border);background:#fff;
+  font-size:.82rem;font-weight:600;color:var(--text3);
+  cursor:pointer;transition:all .2s;
+}
+.dept-tab.active,.dept-tab:hover{background:var(--primary);border-color:var(--primary);color:#fff;}
+.dept-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;
+}
+.dept-card{
+  background:#fff;border:1px solid var(--border);border-radius:var(--r16);
+  padding:1.6rem;cursor:pointer;transition:all .3s;
+  position:relative;overflow:hidden;
+}
+.dept-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--primary),var(--accent));
+  transform:scaleX(0);transform-origin:left;transition:transform .3s;
+}
+.dept-card:hover{transform:translateY(-4px);box-shadow:var(--shadow3);border-color:transparent;}
+.dept-card:hover::after{transform:scaleX(1);}
+.dept-card-icon{
+  width:52px;height:52px;border-radius:var(--r12);
+  background:var(--primary-light);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;margin-bottom:1.1rem;transition:transform .3s;
+}
+.dept-card:hover .dept-card-icon{transform:scale(1.1);}
+.dept-card h3{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:.4rem;}
+.dept-card p{font-size:.8rem;color:var(--text3);line-height:1.6;margin-bottom:.8rem;}
+.dept-card-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:.75rem;color:var(--text3);
+  padding-top:.8rem;border-top:1px solid var(--border);
+}
+.dept-card-footer strong{color:var(--primary);font-weight:700;}
+.dept-arrow{color:var(--primary);font-size:1rem;transition:transform .2s;}
+.dept-card:hover .dept-arrow{transform:translateX(4px);}
+
+/* ===== FIND DOCTOR ===== */
+#find-doctor{background:#fff;}
+.doctor-search-bar{
+  background:var(--bg);border:1px solid var(--border);border-radius:var(--r16);
+  padding:1.2rem;display:flex;gap:1rem;align-items:center;
+  margin-bottom:2rem;flex-wrap:wrap;
+}
+.doctor-search-bar input,.doctor-search-bar select{
+  flex:1;min-width:160px;padding:11px 14px;border-radius:var(--r8);
+  border:1.5px solid var(--border);font-size:.88rem;
+  background:#fff;outline:none;color:var(--text);
+  transition:border-color .2s;
+}
+.doctor-search-bar input:focus,.doctor-search-bar select:focus{border-color:var(--primary);}
+.doctor-search-bar button{
+  padding:11px 26px;border-radius:var(--r8);
+  background:var(--primary);color:#fff;border:none;
+  font-size:.88rem;font-weight:700;white-space:nowrap;
+  transition:all .2s;
+}
+.doctor-search-bar button:hover{background:var(--primary-dark);}
+.doctors-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;
+}
+.doctor-card{
+  border:1px solid var(--border);border-radius:var(--r16);
+  overflow:hidden;background:#fff;transition:all .3s;
+}
+.doctor-card:hover{box-shadow:var(--shadow3);transform:translateY(-4px);border-color:transparent;}
+.doctor-img{
+  height:200px;background:linear-gradient(145deg,#e8f2ff,#d0e8ff);
+  display:flex;align-items:center;justify-content:center;
+  font-size:4.5rem;position:relative;
+}
+.doctor-avail{
+  position:absolute;bottom:.7rem;right:.7rem;
+  padding:4px 10px;border-radius:var(--r100);
+  font-size:.7rem;font-weight:700;
+}
+.avail-today{background:#e6f7f1;color:var(--accent);}
+.avail-tomorrow{background:#fff8e1;color:var(--orange);}
+.doctor-body{padding:1.2rem;}
+.doctor-body h3{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:.2rem;}
+.doctor-spec{font-size:.78rem;color:var(--primary);font-weight:600;margin-bottom:.5rem;}
+.doctor-exp{font-size:.75rem;color:var(--text3);display:flex;align-items:center;gap:4px;margin-bottom:.8rem;}
+.doctor-exp::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+.doctor-rating-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;}
+.doctor-stars{color:#F59E0B;font-size:.8rem;letter-spacing:.05em;}
+.doctor-reviews{font-size:.72rem;color:var(--text3);}
+.doctor-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.8rem;}
+.doctor-tag{
+  padding:3px 9px;border-radius:var(--r100);
+  background:var(--bg);font-size:.7rem;color:var(--text3);border:1px solid var(--border);
+}
+.doctor-actions{display:flex;gap:.5rem;}
+.btn-book{
+  flex:1;padding:9px;border-radius:var(--r8);
+  background:var(--primary);color:#fff;border:none;
+  font-size:.78rem;font-weight:700;transition:all .2s;
+}
+.btn-book:hover{background:var(--primary-dark);}
+.btn-profile{
+  padding:9px 14px;border-radius:var(--r8);
+  border:1.5px solid var(--border2);color:var(--primary);
+  font-size:.78rem;font-weight:600;background:#fff;
+  transition:all .2s;
+}
+.btn-profile:hover{background:var(--primary-light);}
+
+/* ===== HEALTH PACKAGES ===== */
+#packages{background:var(--bg);}
+.packages-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.package-card{
+  background:#fff;border:1px solid var(--border);border-radius:var(--r24);
+  overflow:hidden;transition:all .3s;
+}
+.package-card:hover{box-shadow:var(--shadow3);transform:translateY(-4px);}
+.package-card.featured{border-color:var(--primary);position:relative;}
+.package-card.featured::before{
+  content:'Most Popular';position:absolute;top:1.2rem;right:1.2rem;
+  background:var(--primary);color:#fff;padding:4px 12px;
+  border-radius:var(--r100);font-size:.7rem;font-weight:700;letter-spacing:.06em;
+}
+.package-header{padding:1.8rem 1.8rem 1.2rem;}
+.package-icon{font-size:2rem;margin-bottom:.8rem;}
+.package-header h3{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:.4rem;}
+.package-header p{font-size:.82rem;color:var(--text3);line-height:1.6;}
+.package-price{padding:.8rem 1.8rem;background:var(--bg);display:flex;align-items:baseline;gap:.4rem;}
+.package-price .amount{font-size:1.8rem;font-weight:800;color:var(--primary);}
+.package-price .currency{font-size:.9rem;font-weight:700;color:var(--primary);}
+.package-price .original{font-size:.85rem;color:var(--text3);text-decoration:line-through;}
+.package-price .save{font-size:.75rem;font-weight:700;color:var(--accent);background:var(--accent-light);padding:2px 8px;border-radius:var(--r100);}
+.package-tests{padding:1.2rem 1.8rem;}
+.package-tests h4{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:.8rem;}
+.package-tests ul{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.package-tests ul li{
+  font-size:.83rem;color:var(--text2);
+  display:flex;align-items:center;gap:8px;
+}
+.package-tests ul li::before{content:'✓';color:var(--accent);font-weight:700;font-size:.9rem;}
+.package-footer{padding:1.2rem 1.8rem;border-top:1px solid var(--border);}
+.btn-package{
+  width:100%;padding:12px;border-radius:var(--r12);
+  font-size:.88rem;font-weight:700;border:none;
+  transition:all .2s;
+}
+.btn-package.primary{background:var(--primary);color:#fff;box-shadow:0 4px 16px rgba(0,87,168,.25);}
+.btn-package.primary:hover{background:var(--primary-dark);transform:translateY(-1px);}
+.btn-package.outline{background:#fff;color:var(--primary);border:1.5px solid var(--primary);}
+.btn-package.outline:hover{background:var(--primary-light);}
+
+/* ===== WHY CHOOSE US ===== */
+#why{
+  background:linear-gradient(135deg,#001f4d,#0057a8);
+  color:#fff;overflow:hidden;position:relative;
+}
+#why::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 80% 50%,rgba(0,168,107,.15) 0%,transparent 60%);
+}
+.why-layout{
+  display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;
+  position:relative;z-index:1;
+}
+#why .section-label{color:#7dd3fc;}
+#why .section-label::before{background:#7dd3fc;}
+#why .section-title{color:#fff;}
+#why .section-desc{color:rgba(255,255,255,.6);}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem;}
+.why-item{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--r16);padding:1.4rem;transition:all .3s;
+}
+.why-item:hover{background:rgba(255,255,255,.1);}
+.why-item-icon{font-size:1.5rem;margin-bottom:.6rem;}
+.why-item h4{font-size:.88rem;font-weight:700;margin-bottom:.3rem;}
+.why-item p{font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.6;}
+/* Accreditations */
+.accreditations{display:flex;flex-direction:column;gap:1rem;}
+.accred-card{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  border-radius:var(--r16);padding:1.4rem 1.8rem;
+  display:flex;align-items:center;gap:1.2rem;
+}
+.accred-badge{
+  width:56px;height:56px;border-radius:var(--r12);
+  background:rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;flex-shrink:0;
+}
+.accred-card h4{font-size:.92rem;font-weight:700;color:#fff;margin-bottom:.2rem;}
+.accred-card p{font-size:.78rem;color:rgba(255,255,255,.5);}
+.accred-card .accred-year{font-size:.72rem;color:#7dd3fc;font-weight:700;margin-top:.2rem;}
+
+/* ===== PATIENT SERVICES ===== */
+#patient-services{background:#fff;}
+.ps-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;}
+.ps-card{
+  background:var(--bg);border:1px solid var(--border);border-radius:var(--r16);
+  padding:1.5rem 1rem;text-align:center;cursor:pointer;transition:all .3s;
+}
+.ps-card:hover{background:var(--primary-light);border-color:var(--primary);transform:translateY(-3px);box-shadow:var(--shadow2);}
+.ps-icon{font-size:2rem;margin-bottom:.8rem;}
+.ps-card h4{font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:.3rem;}
+.ps-card p{font-size:.75rem;color:var(--text3);line-height:1.5;}
+
+/* ===== PATIENT STORIES ===== */
+#stories{background:var(--bg);}
+.stories-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;}
+.story-card{
+  background:#fff;border:1px solid var(--border);border-radius:var(--r24);
+  padding:1.8rem;transition:all .3s;position:relative;overflow:hidden;
+}
+.story-card:hover{box-shadow:var(--shadow2);transform:translateY(-3px);}
+.story-quote{
+  font-family:var(--serif);font-size:4rem;font-weight:400;
+  color:var(--primary-light);line-height:1;
+  position:absolute;top:.5rem;right:1.2rem;
+}
+.story-stars{color:#F59E0B;font-size:.85rem;margin-bottom:.8rem;letter-spacing:.1em;}
+.story-text{font-size:.88rem;color:var(--text2);line-height:1.8;margin-bottom:1.2rem;font-style:italic;}
+.story-author{display:flex;align-items:center;gap:.8rem;}
+.story-av{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:#fff;font-size:.9rem;flex-shrink:0;
+}
+.story-author h5{font-size:.88rem;font-weight:700;color:var(--text);}
+.story-author span{font-size:.75rem;color:var(--text3);}
+.story-dept{
+  display:inline-block;margin-top:.5rem;
+  padding:3px 10px;border-radius:var(--r100);
+  font-size:.7rem;font-weight:700;
+  background:var(--primary-light);color:var(--primary);
+}
+
+/* ===== APPOINTMENT SECTION ===== */
+#appointment{
+  background:linear-gradient(135deg,#f0f7f4,#e8f2ff);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+}
+.appt-layout{
+  display:grid;grid-template-columns:1fr 1.4fr;gap:4rem;align-items:start;
+}
+.appt-info{}
+.appt-info .section-title{margin-bottom:1rem;}
+.appt-steps{display:flex;flex-direction:column;gap:1.2rem;margin-top:1.8rem;}
+.appt-step{display:flex;align-items:flex-start;gap:1rem;}
+.appt-step-num{
+  width:36px;height:36px;border-radius:50%;flex-shrink:0;
+  background:var(--primary);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;font-weight:800;
+}
+.appt-step-body h4{font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:.2rem;}
+.appt-step-body p{font-size:.8rem;color:var(--text3);line-height:1.6;}
+.appt-contact{
+  margin-top:2rem;padding:1.2rem 1.5rem;
+  background:#fff;border:1px solid var(--border);border-radius:var(--r16);
+}
+.appt-contact p{font-size:.82rem;color:var(--text3);margin-bottom:.5rem;}
+.appt-contact .phone{font-size:1.4rem;font-weight:800;color:var(--primary);}
+.appt-form-card{
+  background:#fff;border:1px solid var(--border);border-radius:var(--r24);
+  padding:2.2rem;box-shadow:var(--shadow2);
+}
+.appt-form-card h3{font-family:var(--serif);font-size:1.5rem;color:var(--text);margin-bottom:.3rem;}
+.appt-form-card>p{font-size:.83rem;color:var(--text3);margin-bottom:1.5rem;}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
+.form-field{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.8rem;}
+.form-field.span2{grid-column:1/-1;}
+.form-field label{font-size:.75rem;font-weight:700;color:var(--text2);letter-spacing:.04em;}
+.form-field input,.form-field select,.form-field textarea{
+  padding:11px 13px;border-radius:var(--r8);
+  border:1.5px solid var(--border);font-size:.88rem;
+  color:var(--text);outline:none;transition:border-color .2s;
+  background:#fff;
+}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--primary);}
+.form-field textarea{height:90px;resize:none;}
+.form-submit{
+  width:100%;padding:14px;border-radius:var(--r12);
+  background:linear-gradient(135deg,var(--primary),#0077cc);
+  color:#fff;border:none;font-size:.92rem;font-weight:700;
+  transition:all .2s;margin-top:.8rem;
+  box-shadow:0 4px 20px rgba(0,87,168,.3);
+}
+.form-submit:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(0,87,168,.4);}
+.form-note{font-size:.72rem;color:var(--text3);text-align:center;margin-top:.6rem;}
+
+/* ===== NEWS & HEALTH TIPS ===== */
+#news{background:#fff;}
+.news-grid{display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;}
+.news-feature{
+  background:var(--bg);border:1px solid var(--border);border-radius:var(--r24);
+  overflow:hidden;transition:all .3s;cursor:pointer;
+}
+.news-feature:hover{box-shadow:var(--shadow2);}
+.news-feature-thumb{
+  height:260px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);
+  display:flex;align-items:center;justify-content:center;font-size:5rem;
+  position:relative;
+}
+.news-cat-tag{
+  position:absolute;top:1rem;left:1rem;
+  background:var(--primary);color:#fff;
+  font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:5px 13px;border-radius:var(--r100);
+}
+.news-feature-body{padding:1.8rem;}
+.news-feature-body h3{font-family:var(--serif);font-size:1.4rem;font-weight:600;line-height:1.35;color:var(--text);margin-bottom:.8rem;}
+.news-feature-body p{font-size:.88rem;color:var(--text3);line-height:1.7;margin-bottom:1.2rem;}
+.news-meta{display:flex;align-items:center;justify-content:space-between;font-size:.78rem;color:var(--text3);}
+.news-read-more{font-size:.8rem;font-weight:700;color:var(--primary);display:flex;align-items:center;gap:4px;transition:gap .2s;}
+.news-read-more:hover{gap:8px;}
+.news-sidebar{display:flex;flex-direction:column;gap:1rem;}
+.news-mini{
+  background:var(--bg);border:1px solid var(--border);border-radius:var(--r16);
+  padding:1.2rem;cursor:pointer;transition:all .3s;display:flex;gap:.8rem;align-items:flex-start;
+}
+.news-mini:hover{box-shadow:var(--shadow1);background:#fff;}
+.news-mini-thumb{
+  width:64px;height:64px;border-radius:var(--r8);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:1.8rem;
+}
+.nm1{background:#dbeafe;}
+.nm2{background:#dcfce7;}
+.nm3{background:#fef9c3;}
+.nm4{background:#fce7f3;}
+.news-mini-body{}
+.news-mini-body .cat{font-size:.68rem;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem;}
+.news-mini-body h4{font-size:.83rem;font-weight:700;color:var(--text);line-height:1.4;}
+.news-mini-body span{font-size:.72rem;color:var(--text3);margin-top:.3rem;display:block;}
+
+/* ===== EMERGENCY STRIP ===== */
+.emergency-strip{
+  background:linear-gradient(135deg,var(--red),#c62828);
+  padding:1.8rem 5%;
+  display:flex;align-items:center;justify-content:space-between;gap:2rem;
+  flex-wrap:wrap;
+}
+.emergency-strip h2{font-family:var(--serif);font-size:1.6rem;font-weight:600;color:#fff;}
+.emergency-strip p{font-size:.88rem;color:rgba(255,255,255,.75);}
+.emergency-num{font-size:2.2rem;font-weight:800;color:#fff;letter-spacing:.04em;display:flex;align-items:center;gap:.5rem;}
+.btn-call{
+  padding:13px 28px;border-radius:var(--r100);
+  background:#fff;color:var(--red);font-size:.88rem;font-weight:800;
+  border:none;letter-spacing:.04em;transition:all .2s;white-space:nowrap;
+  box-shadow:0 4px 16px rgba(0,0,0,.15);
+}
+.btn-call:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.2);}
+
+/* ===== FOOTER ===== */
+footer{background:#0D1B2A;color:rgba(255,255,255,.7);padding:4rem 5% 2rem;}
+.footer-top{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1.2fr;
+  gap:2.5rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.08);
+}
+.footer-brand p{font-size:.82rem;line-height:1.8;margin-top:.8rem;max-width:260px;}
+.footer-socials{display:flex;gap:.6rem;margin-top:1.2rem;}
+.footer-socials a{
+  width:36px;height:36px;border-radius:var(--r8);
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;transition:all .2s;
+}
+.footer-socials a:hover{background:var(--primary);border-color:var(--primary);}
+.footer-col h4{
+  font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(255,255,255,.35);margin-bottom:1.2rem;
+}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+.footer-col ul li a{font-size:.83rem;color:rgba(255,255,255,.55);transition:color .2s;}
+.footer-col ul li a:hover{color:#fff;}
+.footer-contact-item{display:flex;align-items:flex-start;gap:.6rem;margin-bottom:.7rem;}
+.footer-contact-item .fci{font-size:.9rem;flex-shrink:0;margin-top:.1rem;}
+.footer-contact-item span{font-size:.82rem;line-height:1.5;}
+.footer-bottom{
+  padding-top:1.5rem;display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;font-size:.76rem;
+}
+.footer-bottom a{color:rgba(255,255,255,.4);transition:color .2s;}
+.footer-bottom a:hover{color:rgba(255,255,255,.7);}
+.footer-cert{display:flex;align-items:center;gap:.6rem;color:rgba(255,255,255,.35);}
+.footer-cert::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent);animation:blink 2s infinite;}
+
+/* ===== MODAL ===== */
+#modal-overlay{
+  position:fixed;inset:0;z-index:3000;
+  background:rgba(0,0,0,.55);backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;padding:1rem;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+#modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{
+  background:#fff;border-radius:var(--r24);
+  width:min(520px,100%);max-height:90vh;overflow-y:auto;
+  padding:2.2rem;
+  transform:scale(.95);transition:transform .3s;
+}
+#modal-overlay.open .modal{transform:scale(1);}
+.modal-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;}
+.modal-header h3{font-family:var(--serif);font-size:1.4rem;color:var(--text);}
+.modal-close{
+  width:32px;height:32px;border-radius:50%;border:none;background:var(--bg);
+  font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:background .2s;color:var(--text);
+}
+.modal-close:hover{background:var(--border);}
+.success-state{text-align:center;padding:1rem 0;}
+.success-icon{font-size:4rem;margin-bottom:1rem;}
+.success-state h3{font-family:var(--serif);font-size:1.5rem;color:var(--accent);margin-bottom:.5rem;}
+.success-state p{color:var(--text3);font-size:.9rem;line-height:1.7;}
+.booking-ref{
+  background:var(--accent-light);border:1px solid var(--accent);
+  border-radius:var(--r8);padding:.8rem 1.2rem;margin:1rem 0;
+  font-size:.88rem;font-weight:700;color:var(--accent-dark);
+}
+
+/* ===== MOBILE NAV ===== */
+.mobile-nav{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background:#fff;z-index:1500;
+  padding:2rem 5%;overflow-y:auto;
+  transform:translateX(100%);transition:transform .3s ease;
+  display:flex;flex-direction:column;
+}
+.mobile-nav.open{transform:translateX(0);}
+.mobile-nav-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;}
+.mobile-nav-close{font-size:1.4rem;background:none;border:none;color:var(--text);cursor:pointer;}
+.mobile-nav ul{list-style:none;display:flex;flex-direction:column;gap:0;}
+.mobile-nav ul li a{
+  display:block;padding:1rem 0;
+  font-size:1.05rem;font-weight:600;color:var(--text);
+  border-bottom:1px solid var(--border);
+  transition:color .2s;
+}
+.mobile-nav ul li a:hover{color:var(--primary);}
+.mobile-nav-footer{margin-top:auto;padding-top:2rem;}
+.mobile-nav-footer .btn-appt{display:block;text-align:center;padding:14px;border-radius:var(--r12);}
+
+/* ===== REVEAL ===== */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-scale{opacity:0;transform:scale(.97);transition:opacity .7s ease,transform .7s ease;}
+.reveal-scale.visible{opacity:1;transform:scale(1);}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.fade-1{animation:fadeIn .8s ease both;}
+.fade-2{animation:fadeIn .8s .15s ease both;}
+.fade-3{animation:fadeIn .8s .3s ease both;}
+.fade-4{animation:fadeIn .8s .45s ease both;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1100px){
+  .dept-grid{grid-template-columns:repeat(2,1fr);}
+  .doctors-grid{grid-template-columns:repeat(2,1fr);}
+  .packages-grid{grid-template-columns:repeat(2,1fr);}
+  .ps-grid{grid-template-columns:repeat(3,1fr);}
+  .footer-top{grid-template-columns:1fr 1fr 1fr;}
+  .footer-top .footer-brand{grid-column:1/-1;}
+}
+@media(max-width:800px){
+  .topbar,.topbar-left{display:none;}
+  .hero-content{grid-template-columns:1fr;gap:2.5rem;padding:100px 5% 60px;}
+  .hero-right{display:none;}
+  .hero-stats{grid-template-columns:1fr 1fr;}
+  .nav-menu{display:none;}
+  .nav-actions .btn-appt{display:none;}
+  .hamburger{display:flex;}
+  .why-layout{grid-template-columns:1fr;}
+  .appt-layout{grid-template-columns:1fr;}
+  .news-grid{grid-template-columns:1fr;}
+  .stories-grid{grid-template-columns:1fr;}
+  .dept-grid{grid-template-columns:repeat(2,1fr);}
+  .doctors-grid{grid-template-columns:1fr 1fr;}
+  .packages-grid{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  .form-2col{grid-template-columns:1fr;}
+}
+@media(max-width:500px){
+  .doctors-grid{grid-template-columns:1fr;}
+  .ps-grid{grid-template-columns:1fr 1fr;}
+  .why-grid{grid-template-columns:1fr;}
+  .hero-stats{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP INFO BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span>📍 Hyderabad, Telangana</span>
+    <span>🕐 OPD: Mon–Sat, 8:00 AM – 8:00 PM</span>
+    <span>📧 info@lifecarehospital.in</span>
+  </div>
+  <div class="topbar-right">
+    <a href="#">Patient Portal</a>
+    <a href="#">Pay Bill</a>
+    <a href="#">Health Records</a>
+    <a href="tel:+18001234567" class="topbar-emergency">🚨 Emergency: 1800-123-4567</a>
+  </div>
+</div>
+
+<!-- MAIN NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">L+</div>
+      <div class="logo-text">
+        <div class="name">LifeCare Hospital</div>
+        <div class="tag">Multi-Specialty Healthcare</div>
+      </div>
+    </a>
+    <ul class="nav-menu">
+      <li>
+        <a href="#departments">Departments <span class="arrow">▾</span></a>
+        <div class="dropdown">
+          <a href="#departments"><span class="d-icon">❤️</span>Cardiology</a>
+          <a href="#departments"><span class="d-icon">🧠</span>Neurology</a>
+          <a href="#departments"><span class="d-icon">🦴</span>Orthopedics</a>
+          <a href="#departments"><span class="d-icon">🎗️</span>Oncology</a>
+          <a href="#departments"><span class="d-icon">👶</span>Pediatrics</a>
+          <a href="#departments"><span class="d-icon">👁️</span>Ophthalmology</a>
+          <a href="#departments"><span class="d-icon">🩺</span>View All 40+ Departments</a>
+        </div>
+      </li>
+      <li>
+        <a href="#find-doctor">Find a Doctor <span class="arrow">▾</span></a>
+        <div class="dropdown">
+          <a href="#find-doctor"><span class="d-icon">🔍</span>Search by Name</a>
+          <a href="#find-doctor"><span class="d-icon">🏥</span>Browse by Specialty</a>
+          <a href="#find-doctor"><span class="d-icon">⭐</span>Top Rated Doctors</a>
+          <a href="#find-doctor"><span class="d-icon">📅</span>Available Today</a>
+        </div>
+      </li>
+      <li>
+        <a href="#packages">Health Packages <span class="arrow">▾</span></a>
+        <div class="dropdown">
+          <a href="#packages"><span class="d-icon">👤</span>Basic Checkup</a>
+          <a href="#packages"><span class="d-icon">💎</span>Comprehensive Wellness</a>
+          <a href="#packages"><span class="d-icon">👨‍👩‍👧</span>Family Package</a>
+          <a href="#packages"><span class="d-icon">🏢</span>Corporate Wellness</a>
+        </div>
+      </li>
+      <li><a href="#patient-services">Patient Services</a></li>
+      <li><a href="#news">Health Tips</a></li>
+      <li><a href="#appointment">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-search" onclick="toggleSearch()" title="Search">🔍</button>
+      <button class="btn-appt" onclick="openModal()">Book Appointment</button>
+      <div class="hamburger" onclick="toggleMobileNav()" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- SEARCH OVERLAY -->
+<div id="search-overlay" onclick="closeSearch(event)">
+  <div class="search-box">
+    <div class="search-input-wrap">
+      <input type="text" id="searchInput" placeholder="Search doctors, departments, symptoms, treatments…" oninput="handleSearch(this.value)"/>
+      <button onclick="closeSearch()">✕</button>
+    </div>
+    <div class="search-quick">
+      <span>Popular:</span>
+      <button class="search-tag" onclick="fillSearch('Cardiology')">Cardiology</button>
+      <button class="search-tag" onclick="fillSearch('Dr. Arjun Mehta')">Dr. Arjun Mehta</button>
+      <button class="search-tag" onclick="fillSearch('MRI Scan')">MRI Scan</button>
+      <button class="search-tag" onclick="fillSearch('Knee Replacement')">Knee Replacement</button>
+      <button class="search-tag" onclick="fillSearch('Diabetes')">Diabetes</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-header">
+    <div class="logo">
+      <div class="logo-icon">L+</div>
+      <div class="logo-text"><div class="name">LifeCare Hospital</div></div>
+    </div>
+    <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+  </div>
+  <ul>
+    <li><a href="#departments" onclick="toggleMobileNav()">Departments</a></li>
+    <li><a href="#find-doctor" onclick="toggleMobileNav()">Find a Doctor</a></li>
+    <li><a href="#packages" onclick="toggleMobileNav()">Health Packages</a></li>
+    <li><a href="#patient-services" onclick="toggleMobileNav()">Patient Services</a></li>
+    <li><a href="#stories" onclick="toggleMobileNav()">Patient Stories</a></li>
+    <li><a href="#news" onclick="toggleMobileNav()">Health Tips</a></li>
+    <li><a href="#appointment" onclick="toggleMobileNav()">Contact Us</a></li>
+  </ul>
+  <div class="mobile-nav-footer">
+    <button class="btn-appt" style="width:100%;padding:14px;border-radius:12px;font-size:.95rem;" onclick="openModal();toggleMobileNav()">Book Appointment</button>
+    <p style="text-align:center;margin-top:1rem;font-size:.85rem;color:var(--text3);">Emergency: <strong>1800-123-4567</strong></p>
+  </div>
+</div>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section id="hero">
+  <div class="hero-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-badge fade-1">🟢 NABH & JCI Accredited Hospital</div>
+      <h1 class="hero-title fade-2">
+        Your Health Is Our<br/>
+        <em>Greatest Priority</em>
+      </h1>
+      <p class="hero-subtitle fade-3">LifeCare Hospital brings together over 120 specialist doctors, cutting-edge diagnostics, and compassionate nursing care — all under one roof, dedicated to giving you the best possible outcomes.</p>
+      <div class="hero-ctas fade-4">
+        <button class="btn-white" onclick="openModal()">📅 Book Appointment</button>
+        <a href="#find-doctor" class="btn-outline-white">👨‍⚕️ Find a Doctor</a>
+      </div>
+      <div class="hero-stats fade-4">
+        <div class="hero-stat">
+          <div class="hero-stat-n">75K+</div>
+          <div class="hero-stat-l">Patients Treated</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-n">120+</div>
+          <div class="hero-stat-l">Specialists</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-n">98.5%</div>
+          <div class="hero-stat-l">Satisfaction Rate</div>
+        </div>
+      </div>
+    </div>
+    <!-- Quick Actions Panel -->
+    <div class="hero-right fade-4">
+      <div class="quick-panel">
+        <div class="quick-panel-header">
+          <h3>Quick Actions</h3>
+          <span class="live-badge">Live Queue Active</span>
+        </div>
+        <div class="qp-tabs">
+          <button class="qp-tab active" onclick="switchQPTab(this,'book')">Book Visit</button>
+          <button class="qp-tab" onclick="switchQPTab(this,'video')">Video Consult</button>
+          <button class="qp-tab" onclick="switchQPTab(this,'lab')">Lab Test</button>
+        </div>
+        <div class="qp-form" id="qpForm">
+          <select id="qpDept">
+            <option value="">Select Department</option>
+            <option>Cardiology</option>
+            <option>Neurology</option>
+            <option>Orthopedics</option>
+            <option>Oncology</option>
+            <option>Pediatrics</option>
+            <option>General Medicine</option>
+            <option>Gynecology</option>
+            <option>Dermatology</option>
+          </select>
+          <input type="text" placeholder="Patient Name"/>
+          <input type="tel" placeholder="Mobile Number"/>
+          <input type="date" id="qpDate"/>
+          <button class="qp-submit" onclick="submitQuickBooking()">Check Availability →</button>
+        </div>
+        <div class="qp-links">
+          <div class="qp-link" onclick="window.location='#find-doctor'"><span class="qp-link-icon">👨‍⚕️</span>Find Doctor</div>
+          <div class="qp-link" onclick="window.location='#packages'"><span class="qp-link-icon">🧪</span>Health Package</div>
+          <div class="qp-link"><span class="qp-link-icon">📋</span>My Reports</div>
+          <div class="qp-link"><span class="qp-link-icon">💳</span>Pay Bill</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES STRIP -->
+<div class="services-strip">
+  <div class="services-strip-inner">
+    <div class="strip-item active"><span class="strip-item-icon">🏥</span>All Services</div>
+    <div class="strip-item"><span class="strip-item-icon">🚑</span>Emergency & Trauma</div>
+    <div class="strip-item"><span class="strip-item-icon">🔬</span>Diagnostics & Lab</div>
+    <div class="strip-item"><span class="strip-item-icon">🏋️</span>Physiotherapy</div>
+    <div class="strip-item"><span class="strip-item-icon">💉</span>Vaccination</div>
+    <div class="strip-item"><span class="strip-item-icon">🏠</span>Home Healthcare</div>
+    <div class="strip-item"><span class="strip-item-icon">🎥</span>Tele-Consultation</div>
+    <div class="strip-item"><span class="strip-item-icon">💊</span>Pharmacy</div>
+    <div class="strip-item"><span class="strip-item-icon">🧬</span>Genomics</div>
+    <div class="strip-item"><span class="strip-item-icon">❤️‍🩹</span>Rehabilitation</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     DEPARTMENTS
+============================================================ -->
+<section id="departments" class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-header-row">
+        <div>
+          <div class="section-label reveal">Clinical Departments</div>
+          <h2 class="section-title reveal">World-Class Care Across <em>40+ Specialties</em></h2>
+          <p class="section-desc reveal">Our multi-disciplinary teams collaborate to deliver integrated, patient-centred care for even the most complex conditions.</p>
+        </div>
+        <a href="#" class="view-all reveal">View All Departments →</a>
+      </div>
+      <div class="dept-tabs reveal" style="margin-top:1.5rem;">
+        <button class="dept-tab active" onclick="filterDepts(this,'all')">All</button>
+        <button class="dept-tab" onclick="filterDepts(this,'surgery')">Surgical</button>
+        <button class="dept-tab" onclick="filterDepts(this,'medicine')">Medicine</button>
+        <button class="dept-tab" onclick="filterDepts(this,'diagnostic')">Diagnostic</button>
+        <button class="dept-tab" onclick="filterDepts(this,'child')">Child Care</button>
+        <button class="dept-tab" onclick="filterDepts(this,'women')">Women's Health</button>
+      </div>
+    </div>
+    <div class="dept-grid" id="deptGrid">
+      <div class="dept-card reveal" data-cat="medicine surgery" style="transition-delay:.04s">
+        <div class="dept-card-icon">❤️</div>
+        <h3>Cardiology & Cardiac Surgery</h3>
+        <p>Advanced cardiac care including cath lab procedures, bypass surgery, valve replacements, and heart failure management.</p>
+        <div class="dept-card-footer">
+          <span><strong>18</strong> Specialists</span>
+          <span class="dept-arrow">→</span>
+        </div>
+      </div>
+      <div class="dept-card reveal" data-cat="medicine surgery" style="transition-delay:.08s">
+        <div class="dept-card-icon">🧠</div>
+        <h3>Neurology & Neurosurgery</h3>
+        <p>Comprehensive care for stroke, epilepsy, Parkinson's, brain tumours, and spinal cord injuries using advanced neuro-navigation.</p>
+        <div class="dept-card-footer">
+          <span><strong>14</strong> Specialists</span>
+          <span class="dept-arrow">→</span>
+        </div>
+      </div>
+      <div class="dept-card reveal" data-cat="surgery" style="transition-delay:.12s">
+        <div class="dept-card-icon">🦴</div>
+        <h3>Orthopedics & Sports Medicine</h3>
+        <p>Joint replacements, arthroscopy, spine surgery, sports injury rehab using robotic-assisted surgical systems.</p>
+        <div class="dept-card-footer">
+          <span><strong>12</strong> Specialists</span>
+          <span class="dept-arrow">→</span>
+        </div>
+      </div>
+      <div class="dept-card reveal" data-cat="medicine" style="transition-delay:.16s">
+        <div class="dept-card-icon">🎗️</div>
+        <h3>Oncology & Cancer Care</h3>
+        <p>Multidisciplinary tumour boards, chemotherapy, immunotherapy, targeted therapy, and precision radiation oncology.</p>
+        <div class="dept-card-footer">
+          <span><strong>16</strong> Specialists</span>
+          <span class="dept-arrow">→</span>
+        </div>
+      </div>
+      <div class="dept-card reveal" data-cat="child" style="transition-delay:.2s">
+        <div class="dept-card-icon">👶</div>
+        <h3>Pediatrics & Neonatology</h3>
+        <p>Child-centred care from premature newborns to adolescents — NICU, paediatric surgery, and developmental medicine.</p>
+        <div class="dept-card-footer">
+          <span><strong>10</strong> Specialists</span>
+          <span class="dept-arrow">→</span>
+        </div>
+      </div>
+      <div class="dept-card reveal" data-cat="women" style="transition-delay:.24s">
+        <div class="dept-card-icon">🌸</div>
+        <h3>Obstetrics & Gynecology</h3>
+        <p>Complete women's health — prenatal care, high-risk pregnancy, laparoscopic surgery, fertility treatments.</p>
+        <div class="dept-card-footer">
+          <span><strong>9</strong> Specialists</span>
+          <span class="dept-arrow">→</span>
+        </div>
+      </div>
+      <div class="dept-card reveal" data-cat="diagnostic" style="transition-delay:.28s">
+        <div class="dept-card-icon">🔬</div>
+        <h3>Radiology & Imaging</h3>
+        <p>3T MRI, 256-slice CT, PET-CT, digital X-ray and AI-assisted reporting with same-day turnaround.</p>
+        <div class="dept-card-footer">
+          <span><strong>8</strong> Specialists</span>
+          <span class="dept-arrow">→</span>
+        </div>
+      </div>
+      <div class="dept-card reveal" data-cat="medicine" style="transition-delay:.32s">
+        <div class="dept-card-icon">🫁</div>
+        <h3>Pulmonology & Sleep Medicine</h3>
+        <p>Asthma, COPD, interstitial lung disease, sleep apnea diagnosis, and advanced bronchoscopy services.</p>
+        <div class="dept-card-footer">
+          <span><strong>7</strong> Specialists</span>
+          <span class="dept-arrow">→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FIND A DOCTOR
+============================================================ -->
+<section id="find-doctor" class="section" style="background:var(--bg);">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-header-row">
+        <div>
+          <div class="section-label reveal">Our Team</div>
+          <h2 class="section-title reveal">Find the Right <em>Doctor for You</em></h2>
+          <p class="section-desc reveal">Search from 120+ highly qualified specialists by name, department, or availability.</p>
+        </div>
+        <a href="#" class="view-all reveal">All Doctors →</a>
+      </div>
+    </div>
+    <div class="doctor-search-bar reveal">
+      <input type="text" placeholder="🔍  Search doctor name or symptom…" id="doctorSearch" oninput="filterDoctors()"/>
+      <select id="doctorDeptFilter" onchange="filterDoctors()">
+        <option value="">All Departments</option>
+        <option>Cardiology</option>
+        <option>Neurology</option>
+        <option>Orthopedics</option>
+        <option>Oncology</option>
+        <option>Pediatrics</option>
+        <option>Gynecology</option>
+      </select>
+      <select id="doctorAvailFilter" onchange="filterDoctors()">
+        <option value="">Any Availability</option>
+        <option value="today">Available Today</option>
+        <option value="tomorrow">Tomorrow</option>
+      </select>
+      <button onclick="filterDoctors()">Search Doctors</button>
+    </div>
+    <div class="doctors-grid" id="doctorsGrid">
+      <div class="doctor-card reveal" data-dept="Cardiology" data-avail="today" style="transition-delay:.04s">
+        <div class="doctor-img">👨‍⚕️<span class="doctor-avail avail-today">✓ Today</span></div>
+        <div class="doctor-body">
+          <h3>Dr. Arjun Mehta</h3>
+          <div class="doctor-spec">Senior Interventional Cardiologist</div>
+          <div class="doctor-exp">MBBS, MD, DM · 18 Years Experience</div>
+          <div class="doctor-rating-row">
+            <span class="doctor-stars">★★★★★</span>
+            <span class="doctor-reviews">4.9 · 312 reviews</span>
+          </div>
+          <div class="doctor-tags">
+            <span class="doctor-tag">Angioplasty</span>
+            <span class="doctor-tag">Heart Failure</span>
+            <span class="doctor-tag">Echocardiography</span>
+          </div>
+          <div class="doctor-actions">
+            <button class="btn-book" onclick="openModal('Dr. Arjun Mehta', 'Cardiology')">Book Appointment</button>
+            <button class="btn-profile">Profile</button>
+          </div>
+        </div>
+      </div>
+      <div class="doctor-card reveal" data-dept="Neurology" data-avail="today" style="transition-delay:.08s">
+        <div class="doctor-img">👩‍⚕️<span class="doctor-avail avail-today">✓ Today</span></div>
+        <div class="doctor-body">
+          <h3>Dr. Priya Nair</h3>
+          <div class="doctor-spec">Consultant Neurologist</div>
+          <div class="doctor-exp">MBBS, MD, DM · 14 Years Experience</div>
+          <div class="doctor-rating-row">
+            <span class="doctor-stars">★★★★★</span>
+            <span class="doctor-reviews">4.8 · 247 reviews</span>
+          </div>
+          <div class="doctor-tags">
+            <span class="doctor-tag">Stroke</span>
+            <span class="doctor-tag">Epilepsy</span>
+            <span class="doctor-tag">Parkinson's</span>
+          </div>
+          <div class="doctor-actions">
+            <button class="btn-book" onclick="openModal('Dr. Priya Nair', 'Neurology')">Book Appointment</button>
+            <button class="btn-profile">Profile</button>
+          </div>
+        </div>
+      </div>
+      <div class="doctor-card reveal" data-dept="Orthopedics" data-avail="tomorrow" style="transition-delay:.12s">
+        <div class="doctor-img">👨‍⚕️<span class="doctor-avail avail-tomorrow">⏰ Tomorrow</span></div>
+        <div class="doctor-body">
+          <h3>Dr. Ravi Shankar</h3>
+          <div class="doctor-spec">Orthopedic Surgeon & Sports Medicine</div>
+          <div class="doctor-exp">MBBS, MS Ortho · 22 Years Experience</div>
+          <div class="doctor-rating-row">
+            <span class="doctor-stars">★★★★★</span>
+            <span class="doctor-reviews">4.9 · 418 reviews</span>
+          </div>
+          <div class="doctor-tags">
+            <span class="doctor-tag">Joint Replacement</span>
+            <span class="doctor-tag">ACL Repair</span>
+            <span class="doctor-tag">Spine</span>
+          </div>
+          <div class="doctor-actions">
+            <button class="btn-book" onclick="openModal('Dr. Ravi Shankar', 'Orthopedics')">Book Appointment</button>
+            <button class="btn-profile">Profile</button>
+          </div>
+        </div>
+      </div>
+      <div class="doctor-card reveal" data-dept="Oncology" data-avail="today" style="transition-delay:.16s">
+        <div class="doctor-img">👩‍⚕️<span class="doctor-avail avail-today">✓ Today</span></div>
+        <div class="doctor-body">
+          <h3>Dr. Sneha Reddy</h3>
+          <div class="doctor-spec">Medical Oncologist & Hematologist</div>
+          <div class="doctor-exp">MBBS, MD, DM · 16 Years Experience</div>
+          <div class="doctor-rating-row">
+            <span class="doctor-stars">★★★★★</span>
+            <span class="doctor-reviews">4.9 · 289 reviews</span>
+          </div>
+          <div class="doctor-tags">
+            <span class="doctor-tag">Breast Cancer</span>
+            <span class="doctor-tag">Immunotherapy</span>
+            <span class="doctor-tag">Leukemia</span>
+          </div>
+          <div class="doctor-actions">
+            <button class="btn-book" onclick="openModal('Dr. Sneha Reddy', 'Oncology')">Book Appointment</button>
+            <button class="btn-profile">Profile</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     HEALTH PACKAGES
+============================================================ -->
+<section id="packages" class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-header-row">
+        <div>
+          <div class="section-label reveal">Preventive Care</div>
+          <h2 class="section-title reveal">Health Checkup <em>Packages</em></h2>
+          <p class="section-desc reveal">Invest in your health with our comprehensive screening packages designed by expert physicians.</p>
+        </div>
+        <a href="#" class="view-all reveal">All Packages →</a>
+      </div>
+    </div>
+    <div class="packages-grid">
+      <div class="package-card reveal" style="transition-delay:.04s">
+        <div class="package-header">
+          <div class="package-icon">🩺</div>
+          <h3>Basic Wellness Check</h3>
+          <p>Essential tests to monitor your overall health and catch early warning signs.</p>
+        </div>
+        <div class="package-price">
+          <span class="currency">₹</span>
+          <span class="amount">999</span>
+          <span class="original">₹1,800</span>
+          <span class="save">44% OFF</span>
+        </div>
+        <div class="package-tests">
+          <h4>20 Tests Included</h4>
+          <ul>
+            <li>Complete Blood Count (CBC)</li>
+            <li>Blood Sugar (Fasting & PP)</li>
+            <li>Lipid Profile</li>
+            <li>Liver Function Test</li>
+            <li>Kidney Function Test</li>
+            <li>Thyroid Profile (T3, T4, TSH)</li>
+          </ul>
+        </div>
+        <div class="package-footer">
+          <button class="btn-package outline" onclick="openModal('', '', 'Basic Wellness Package')">Book This Package</button>
+        </div>
+      </div>
+      <div class="package-card featured reveal" style="transition-delay:.08s">
+        <div class="package-header">
+          <div class="package-icon">💎</div>
+          <h3>Comprehensive Wellness</h3>
+          <p>Full-body evaluation with specialist consultation, imaging and cardiac screening.</p>
+        </div>
+        <div class="package-price">
+          <span class="currency">₹</span>
+          <span class="amount">3,499</span>
+          <span class="original">₹6,500</span>
+          <span class="save">46% OFF</span>
+        </div>
+        <div class="package-tests">
+          <h4>75 Tests Included</h4>
+          <ul>
+            <li>All Basic Tests +</li>
+            <li>ECG & 2D Echocardiography</li>
+            <li>Chest X-Ray (PA View)</li>
+            <li>Cancer Markers (PSA, CEA, CA-125)</li>
+            <li>Vitamin D, B12 & Ferritin</li>
+            <li>Specialist Doctor Consultation</li>
+          </ul>
+        </div>
+        <div class="package-footer">
+          <button class="btn-package primary" onclick="openModal('', '', 'Comprehensive Wellness Package')">Book This Package</button>
+        </div>
+      </div>
+      <div class="package-card reveal" style="transition-delay:.12s">
+        <div class="package-header">
+          <div class="package-icon">👨‍👩‍👧‍👦</div>
+          <h3>Family Wellness Plan</h3>
+          <p>Protect your entire family with customised checkup plans for every age group.</p>
+        </div>
+        <div class="package-price">
+          <span class="currency">₹</span>
+          <span class="amount">9,999</span>
+          <span class="original">₹18,000</span>
+          <span class="save">44% OFF</span>
+        </div>
+        <div class="package-tests">
+          <h4>4 Members · 50 Tests Each</h4>
+          <ul>
+            <li>Individual Basic + Advanced Tests</li>
+            <li>Paediatric Assessment (child)</li>
+            <li>Women's Health Screening</li>
+            <li>Cardiac Risk Evaluation (adults)</li>
+            <li>Free Annual Follow-up</li>
+            <li>Health Manager Assigned</li>
+          </ul>
+        </div>
+        <div class="package-footer">
+          <button class="btn-package outline" onclick="openModal('', '', 'Family Wellness Plan')">Book This Package</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WHY CHOOSE US
+============================================================ -->
+<section id="why" class="section">
+  <div class="section-inner">
+    <div class="why-layout">
+      <div>
+        <div class="section-label reveal">Why LifeCare</div>
+        <h2 class="section-title reveal">Where Expertise Meets <em>Compassion</em></h2>
+        <p class="section-desc reveal">We don't just treat diseases — we care for people. Every decision at LifeCare is guided by clinical evidence, ethical practice, and genuine concern for your wellbeing.</p>
+        <div class="why-grid">
+          <div class="why-item reveal" style="transition-delay:.05s">
+            <div class="why-item-icon">🤖</div>
+            <h4>AI-Assisted Diagnostics</h4>
+            <p>Machine learning algorithms assist radiologists in detecting anomalies earlier and more accurately.</p>
+          </div>
+          <div class="why-item reveal" style="transition-delay:.1s">
+            <div class="why-item-icon">⚡</div>
+            <h4>3-Minute Emergency Response</h4>
+            <p>Dedicated trauma bays staffed 24/7 with a Level-1 trauma team ready at all times.</p>
+          </div>
+          <div class="why-item reveal" style="transition-delay:.15s">
+            <div class="why-item-icon">🔒</div>
+            <h4>Transparent Pricing</h4>
+            <p>Full cost estimates before every procedure. No hidden charges. Cashless insurance for 200+ insurers.</p>
+          </div>
+          <div class="why-item reveal" style="transition-delay:.2s">
+            <div class="why-item-icon">🌍</div>
+            <h4>International Patient Desk</h4>
+            <p>Dedicated coordinators for medical tourism — visa, travel, translation, and accommodation support.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accreditations reveal-scale">
+        <div class="accred-card">
+          <div class="accred-badge">🏅</div>
+          <div>
+            <h4>NABH Accreditation</h4>
+            <p>National Accreditation Board for Hospitals & Healthcare Providers — highest Indian standard.</p>
+            <div class="accred-year">Certified Since 2010 · Renewed 2024</div>
+          </div>
+        </div>
+        <div class="accred-card">
+          <div class="accred-badge">🌐</div>
+          <div>
+            <h4>JCI International Accreditation</h4>
+            <p>Joint Commission International — gold standard for global healthcare quality and patient safety.</p>
+            <div class="accred-year">Certified Since 2015 · Renewed 2023</div>
+          </div>
+        </div>
+        <div class="accred-card">
+          <div class="accred-badge">📋</div>
+          <div>
+            <h4>ISO 9001:2015 Certified</h4>
+            <p>Quality Management System certification for consistent service delivery and process excellence.</p>
+            <div class="accred-year">Certified · Scope: All Clinical Services</div>
+          </div>
+        </div>
+        <div class="accred-card">
+          <div class="accred-badge">🏆</div>
+          <div>
+            <h4>Best Hospital Award 2024</h4>
+            <p>Recognised by the Times Healthcare Awards as the Best Multi-Specialty Hospital in South India.</p>
+            <div class="accred-year">Times Healthcare Awards · Hyderabad</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PATIENT SERVICES
+============================================================ -->
+<section id="patient-services" class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label reveal">Convenience</div>
+      <h2 class="section-title reveal">Everything You Need, <em>Easily Accessible</em></h2>
+      <p class="section-desc reveal">From booking to billing, we've made every step of your healthcare journey simple and transparent.</p>
+    </div>
+    <div class="ps-grid">
+      <div class="ps-card reveal" style="transition-delay:.04s" onclick="openModal()">
+        <div class="ps-icon">📅</div>
+        <h4>Online Appointment</h4>
+        <p>Book in 60 seconds — choose your doctor, date and time slot.</p>
+      </div>
+      <div class="ps-card reveal" style="transition-delay:.08s">
+        <div class="ps-icon">🎥</div>
+        <h4>Video Consultation</h4>
+        <p>Consult specialist doctors from the comfort of your home.</p>
+      </div>
+      <div class="ps-card reveal" style="transition-delay:.12s">
+        <div class="ps-icon">🏠</div>
+        <h4>Home Sample Collection</h4>
+        <p>Trained phlebotomists visit your home for lab sample collection.</p>
+      </div>
+      <div class="ps-card reveal" style="transition-delay:.16s">
+        <div class="ps-icon">📱</div>
+        <h4>Digital Health Records</h4>
+        <p>Access prescriptions, reports and scan images anytime on the app.</p>
+      </div>
+      <div class="ps-card reveal" style="transition-delay:.2s">
+        <div class="ps-icon">💳</div>
+        <h4>Cashless Insurance</h4>
+        <p>Tied up with 200+ insurance providers for smooth cashless treatment.</p>
+      </div>
+      <div class="ps-card reveal" style="transition-delay:.24s">
+        <div class="ps-icon">🌙</div>
+        <h4>24/7 Pharmacy</h4>
+        <p>Round-the-clock in-hospital pharmacy with home delivery option.</p>
+      </div>
+      <div class="ps-card reveal" style="transition-delay:.28s">
+        <div class="ps-icon">🚐</div>
+        <h4>Ambulance Service</h4>
+        <p>ALS-equipped ambulances with GPS tracking across the city.</p>
+      </div>
+      <div class="ps-card reveal" style="transition-delay:.32s">
+        <div class="ps-icon">🍽️</div>
+        <h4>Diet & Nutrition</h4>
+        <p>Personalised diet plans and nutritionist consultations for inpatients and outpatients.</p>
+      </div>
+      <div class="ps-card reveal" style="transition-delay:.36s">
+        <div class="ps-icon">🧘</div>
+        <h4>Wellness Centre</h4>
+        <p>Yoga, meditation and stress management programs for holistic healing.</p>
+      </div>
+      <div class="ps-card reveal" style="transition-delay:.4s">
+        <div class="ps-icon">✈️</div>
+        <h4>Medical Tourism</h4>
+        <p>End-to-end support for international patients — VISA, stay and care.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PATIENT STORIES
+============================================================ -->
+<section id="stories" class="section" style="background:var(--bg);">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label reveal">Patient Stories</div>
+      <h2 class="section-title reveal">Real Stories of <em>Recovery & Hope</em></h2>
+    </div>
+    <div class="stories-grid">
+      <div class="story-card reveal" style="transition-delay:.04s">
+        <div class="story-quote">"</div>
+        <div class="story-stars">★★★★★</div>
+        <p class="story-text">After my bypass surgery here, I can genuinely say the level of care was extraordinary. Every person — from nurses to surgeons — made me feel safe throughout my stay and recovery.</p>
+        <div class="story-author">
+          <div class="story-av">RK</div>
+          <div>
+            <h5>Rajesh Kumar, 54</h5>
+            <span>Hyderabad · May 2024</span>
+            <div class="story-dept">Cardiac Surgery</div>
+          </div>
+        </div>
+      </div>
+      <div class="story-card reveal" style="transition-delay:.08s">
+        <div class="story-quote">"</div>
+        <div class="story-stars">★★★★★</div>
+        <p class="story-text">Dr. Sneha and her oncology team gave my mother a second chance at life. Their approach was not just clinical but deeply compassionate. We are forever grateful.</p>
+        <div class="story-author">
+          <div class="story-av">AP</div>
+          <div>
+            <h5>Aarti Patel, 31</h5>
+            <span>Bangalore · Mar 2024</span>
+            <div class="story-dept">Oncology</div>
+          </div>
+        </div>
+      </div>
+      <div class="story-card reveal" style="transition-delay:.12s">
+        <div class="story-quote">"</div>
+        <div class="story-stars">★★★★★</div>
+        <p class="story-text">I came in after a complex spine injury from an accident. The robotic surgery and the rehabilitation team helped me walk again in just 8 weeks. Truly world-class.</p>
+        <div class="story-author">
+          <div class="story-av">VS</div>
+          <div>
+            <h5>Vikram Singh, 42</h5>
+            <span>Pune · Jan 2025</span>
+            <div class="story-dept">Spine Surgery</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     APPOINTMENT
+============================================================ -->
+<section id="appointment" class="section">
+  <div class="section-inner">
+    <div class="appt-layout">
+      <div class="appt-info">
+        <div class="section-label reveal">Get In Touch</div>
+        <h2 class="section-title reveal">Schedule an Appointment <em>Today</em></h2>
+        <p class="section-desc reveal">Fill the form or call us. Our patient coordinators confirm your slot within 30 minutes.</p>
+        <div class="appt-steps reveal" style="transition-delay:.1s">
+          <div class="appt-step">
+            <div class="appt-step-num">1</div>
+            <div class="appt-step-body">
+              <h4>Choose Department & Doctor</h4>
+              <p>Select from 40+ specialties and 120+ specialists based on your needs.</p>
+            </div>
+          </div>
+          <div class="appt-step">
+            <div class="appt-step-num">2</div>
+            <div class="appt-step-body">
+              <h4>Pick a Date & Time Slot</h4>
+              <p>Real-time availability shown — morning, afternoon and evening slots.</p>
+            </div>
+          </div>
+          <div class="appt-step">
+            <div class="appt-step-num">3</div>
+            <div class="appt-step-body">
+              <h4>Receive Instant Confirmation</h4>
+              <p>SMS and email confirmation with your appointment ID within minutes.</p>
+            </div>
+          </div>
+        </div>
+        <div class="appt-contact reveal">
+          <p>Prefer to call? We're available 8 AM – 8 PM</p>
+          <div class="phone">📞 1800-123-4567</div>
+        </div>
+      </div>
+      <div class="appt-form-card reveal-scale">
+        <h3>Book an Appointment</h3>
+        <p>All fields marked * are required. We respond within 30 minutes.</p>
+        <div class="form-2col">
+          <div class="form-field">
+            <label>First Name *</label>
+            <input type="text" id="af_fname" placeholder="e.g. Rahul"/>
+          </div>
+          <div class="form-field">
+            <label>Last Name *</label>
+            <input type="text" id="af_lname" placeholder="e.g. Sharma"/>
+          </div>
+          <div class="form-field">
+            <label>Mobile Number *</label>
+            <input type="tel" id="af_phone" placeholder="+91 98765 43210"/>
+          </div>
+          <div class="form-field">
+            <label>Email Address</label>
+            <input type="email" id="af_email" placeholder="you@example.com"/>
+          </div>
+          <div class="form-field">
+            <label>Department *</label>
+            <select id="af_dept">
+              <option value="">-- Select Department --</option>
+              <option>Cardiology</option>
+              <option>Neurology</option>
+              <option>Orthopedics</option>
+              <option>Oncology</option>
+              <option>Pediatrics</option>
+              <option>Gynecology</option>
+              <option>Dermatology</option>
+              <option>General Medicine</option>
+              <option>ENT</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Preferred Date *</label>
+            <input type="date" id="af_date"/>
+          </div>
+          <div class="form-field span2">
+            <label>Brief Symptoms / Reason</label>
+            <textarea id="af_symptoms" placeholder="Briefly describe your symptoms or reason for consultation…"></textarea>
+          </div>
+        </div>
+        <button class="form-submit" onclick="submitAppointmentForm()">Confirm Appointment →</button>
+        <p class="form-note">🔒 Your data is secure and confidential. We never share your information.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     NEWS
+============================================================ -->
+<section id="news" class="section" style="background:var(--bg);">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-header-row">
+        <div>
+          <div class="section-label reveal">Health Knowledge</div>
+          <h2 class="section-title reveal">Health Tips & <em>Medical News</em></h2>
+        </div>
+        <a href="#" class="view-all reveal">All Articles →</a>
+      </div>
+    </div>
+    <div class="news-grid">
+      <div class="news-feature reveal">
+        <div class="news-feature-thumb">
+          🫀<span class="news-cat-tag">Cardiology</span>
+        </div>
+        <div class="news-feature-body">
+          <h3>How AI Is Transforming Early Detection of Heart Disease</h3>
+          <p>Our cardiology team uses machine learning trained on 100,000+ ECGs to flag potential anomalies earlier than conventional methods — significantly reducing cardiac events in at-risk patients.</p>
+          <div class="news-meta">
+            <span>📅 May 12, 2025 &nbsp;·&nbsp; Dr. Arjun Mehta</span>
+            <a href="#" class="news-read-more">Read Article →</a>
+          </div>
+        </div>
+      </div>
+      <div class="news-sidebar">
+        <div class="news-mini reveal" style="transition-delay:.04s">
+          <div class="news-mini-thumb nm1">🧬</div>
+          <div class="news-mini-body">
+            <div class="cat">Oncology</div>
+            <h4>Targeted Therapy for Lung Cancer: What You Need to Know</h4>
+            <span>Apr 28, 2025</span>
+          </div>
+        </div>
+        <div class="news-mini reveal" style="transition-delay:.08s">
+          <div class="news-mini-thumb nm2">🥗</div>
+          <div class="news-mini-body">
+            <div class="cat">Wellness</div>
+            <h4>5 Evidence-Based Habits for Heart Health After 40</h4>
+            <span>Apr 15, 2025</span>
+          </div>
+        </div>
+        <div class="news-mini reveal" style="transition-delay:.12s">
+          <div class="news-mini-thumb nm3">🧠</div>
+          <div class="news-mini-body">
+            <div class="cat">Neurology</div>
+            <h4>Recognising Stroke Symptoms: Every Second Counts</h4>
+            <span>Apr 5, 2025</span>
+          </div>
+        </div>
+        <div class="news-mini reveal" style="transition-delay:.16s">
+          <div class="news-mini-thumb nm4">💊</div>
+          <div class="news-mini-body">
+            <div class="cat">Diabetes</div>
+            <h4>Managing Type 2 Diabetes: Latest Guidelines 2025</h4>
+            <span>Mar 20, 2025</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EMERGENCY STRIP -->
+<div class="emergency-strip">
+  <div>
+    <h2>Medical Emergency?</h2>
+    <p>Our emergency department is open 24/7 · 365 days · Zero waiting for critical cases</p>
+  </div>
+  <div class="emergency-num">📞 1800 – 123 – 4567</div>
+  <a href="tel:+18001234567" class="btn-call">Call Emergency Now</a>
+</div>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+  <div class="footer-top" style="max-width:1400px;margin:0 auto;">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:.5rem;">
+        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--primary),#0077cc);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1rem;">L+</div>
+        <div style="font-size:1.1rem;font-weight:800;color:#fff;">LifeCare Hospital</div>
+      </div>
+      <p>A NABH & JCI accredited multi-specialty hospital in Hyderabad, committed to delivering compassionate, evidence-based healthcare since 1998.</p>
+      <div class="footer-socials">
+        <a href="#" title="Facebook">📘</a>
+        <a href="#" title="Instagram">📸</a>
+        <a href="#" title="LinkedIn">💼</a>
+        <a href="#" title="YouTube">▶️</a>
+        <a href="#" title="Twitter">🐦</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Departments</h4>
+      <ul>
+        <li><a href="#">Cardiology</a></li>
+        <li><a href="#">Neurology</a></li>
+        <li><a href="#">Orthopedics</a></li>
+        <li><a href="#">Oncology</a></li>
+        <li><a href="#">Pediatrics</a></li>
+        <li><a href="#">Gynecology</a></li>
+        <li><a href="#">View All →</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Patient Services</h4>
+      <ul>
+        <li><a href="#">Book Appointment</a></li>
+        <li><a href="#">Find a Doctor</a></li>
+        <li><a href="#">Health Packages</a></li>
+        <li><a href="#">Lab Test @ Home</a></li>
+        <li><a href="#">Video Consultation</a></li>
+        <li><a href="#">Patient Portal</a></li>
+        <li><a href="#">Pay Bill Online</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#">About LifeCare</a></li>
+        <li><a href="#">Our Doctors</a></li>
+        <li><a href="#">Accreditations</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Research & Education</a></li>
+        <li><a href="#">CSR Initiatives</a></li>
+        <li><a href="#">Media & Press</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <div class="footer-contact-item">
+        <span class="fci">📍</span>
+        <span>LifeCare Hospital, Banjara Hills Rd No. 12, Hyderabad – 500034, Telangana</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="fci">📞</span>
+        <span>1800-123-4567 (Toll Free)<br/>040-6789-0000 (Board)</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="fci">✉️</span>
+        <span>info@lifecarehospital.in<br/>appointments@lifecarehospital.in</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="fci">🕐</span>
+        <span>OPD: Mon–Sat 8am–8pm<br/>Emergency: 24/7 · 365 Days</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom" style="max-width:1400px;margin:0 auto;">
+    <p>© 2025 LifeCare Hospital Pvt. Ltd. All rights reserved. &nbsp;|&nbsp; <a href="#">Privacy Policy</a> &nbsp;|&nbsp; <a href="#">Terms of Use</a> &nbsp;|&nbsp; <a href="#">Disclaimer</a></p>
+    <div class="footer-cert">All systems operational · NABH & JCI Accredited</div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     BOOKING MODAL
+============================================================ -->
+<div id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="mainModal">
+    <div id="modalBookingForm">
+      <div class="modal-header">
+        <h3>Book an Appointment</h3>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="form-field">
+        <label>Patient Name *</label>
+        <input type="text" id="m_name" placeholder="Full Name"/>
+      </div>
+      <div class="form-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <div class="form-field">
+          <label>Mobile *</label>
+          <input type="tel" id="m_phone" placeholder="+91 …"/>
+        </div>
+        <div class="form-field">
+          <label>Email</label>
+          <input type="email" id="m_email" placeholder="optional"/>
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Department *</label>
+        <select id="m_dept">
+          <option value="">-- Select Department --</option>
+          <option>Cardiology</option>
+          <option>Neurology</option>
+          <option>Orthopedics</option>
+          <option>Oncology</option>
+          <option>Pediatrics</option>
+          <option>Gynecology</option>
+          <option>Dermatology</option>
+          <option>General Medicine</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Preferred Date *</label>
+        <input type="date" id="m_date"/>
+      </div>
+      <div class="form-field">
+        <label>Preferred Time Slot</label>
+        <select id="m_slot">
+          <option>Morning (8AM – 12PM)</option>
+          <option>Afternoon (12PM – 4PM)</option>
+          <option>Evening (4PM – 8PM)</option>
+        </select>
+      </div>
+      <button class="form-submit" onclick="submitModal()">Confirm Booking →</button>
+      <p class="form-note">🔒 Secure · Confidential · Confirmation within 30 minutes</p>
+    </div>
+    <div id="modalSuccess" style="display:none;">
+      <button class="modal-close" style="float:right;margin-bottom:1rem;" onclick="closeModal()">✕</button>
+      <div class="success-state">
+        <div class="success-icon">✅</div>
+        <h3>Appointment Booked!</h3>
+        <p>Your appointment has been successfully registered. Our patient coordinator will call you within 30 minutes to confirm the slot.</p>
+        <div class="booking-ref" id="bookingRef">Booking ID: LCH-2025-XXXX</div>
+        <p style="font-size:.82rem;color:var(--text3);">A confirmation SMS will be sent to your mobile number shortly.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── NAV SCROLL ── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',scrollY>60);
+});
+
+/* ── SMOOTH SCROLL ── */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+
+/* ── SCROLL REVEAL ── */
+const revObs=new IntersectionObserver(entries=>{
+  entries.forEach((en,i)=>{
+    if(en.isIntersecting) setTimeout(()=>en.target.classList.add('visible'),i*50);
+  });
+},{threshold:0.08});
+document.querySelectorAll('.reveal,.reveal-scale').forEach(el=>revObs.observe(el));
+
+/* ── SEARCH ── */
+const searchData=[
+  {icon:'❤️',title:'Cardiology Department',sub:'18 Specialists · OPD Daily'},
+  {icon:'🧠',title:'Neurology & Neurosurgery',sub:'14 Specialists · OPD Mon–Sat'},
+  {icon:'🦴',title:'Orthopedics & Sports Medicine',sub:'12 Specialists · Robotic Surgery'},
+  {icon:'👨‍⚕️',title:'Dr. Arjun Mehta',sub:'Senior Cardiologist · Available Today'},
+  {icon:'👩‍⚕️',title:'Dr. Priya Nair',sub:'Neurologist · Available Today'},
+  {icon:'🔬',title:'MRI Scan – 3 Tesla',sub:'Radiology & Imaging · Same Day Report'},
+  {icon:'💉',title:'Knee Replacement Surgery',sub:'Orthopedics · Robotic Assisted'},
+  {icon:'💊',title:'Diabetes Management',sub:'Endocrinology · Lifestyle Clinic'},
+  {icon:'🎗️',title:'Cancer Screening Package',sub:'Oncology · Book Online'},
+];
+function toggleSearch(){
+  const o=document.getElementById('search-overlay');
+  o.classList.toggle('open');
+  if(o.classList.contains('open')) setTimeout(()=>document.getElementById('searchInput').focus(),100);
+}
+function closeSearch(e){
+  if(!e||e.target===document.getElementById('search-overlay')) document.getElementById('search-overlay').classList.remove('open');
+}
+function fillSearch(v){
+  document.getElementById('searchInput').value=v;
+  handleSearch(v);
+}
+function handleSearch(v){
+  const res=document.getElementById('searchResults');
+  if(!v.trim()){res.style.display='none';return;}
+  const filtered=searchData.filter(d=>d.title.toLowerCase().includes(v.toLowerCase())||d.sub.toLowerCase().includes(v.toLowerCase()));
+  if(!filtered.length){res.style.display='none';return;}
+  res.style.display='block';
+  res.innerHTML=filtered.map(d=>`
+    <div class="search-result-item" onclick="closeSearch()">
+      <div class="sr-icon">${d.icon}</div>
+      <div class="sr-text"><h5>${d.title}</h5><span>${d.sub}</span></div>
+    </div>`).join('');
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeSearch(); });
+
+/* ── MOBILE NAV ── */
+function toggleMobileNav(){
+  document.getElementById('mobileNav').classList.toggle('open');
+}
+
+/* ── QUICK PANEL TABS ── */
+function switchQPTab(btn,type){
+  document.querySelectorAll('.qp-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const form=document.getElementById('qpForm');
+  const placeholders={
+    book:['Select Department','Patient Name','Mobile Number'],
+    video:['Select Speciality','Patient Name','Mobile Number'],
+    lab:['Select Test Category','Patient Name','Mobile Number']
+  };
+  const inputs=form.querySelectorAll('input[type=text],input[type=tel]');
+  inputs[0].placeholder=placeholders[type][1];
+  inputs[1].placeholder=placeholders[type][2];
+}
+function submitQuickBooking(){
+  const dept=document.getElementById('qpDept').value;
+  const date=document.getElementById('qpDate').value;
+  if(!dept){alert('Please select a department.');return;}
+  openModal('',dept);
+}
+
+/* ── DEPT FILTER ── */
+function filterDepts(btn,cat){
+  document.querySelectorAll('.dept-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.dept-card').forEach(card=>{
+    const show=cat==='all'||card.dataset.cat.includes(cat);
+    card.style.display=show?'':'none';
+  });
+}
+
+/* ── DOCTOR FILTER ── */
+function filterDoctors(){
+  const name=document.getElementById('doctorSearch').value.toLowerCase();
+  const dept=document.getElementById('doctorDeptFilter').value;
+  const avail=document.getElementById('doctorAvailFilter').value;
+  document.querySelectorAll('.doctor-card').forEach(card=>{
+    const h3=card.querySelector('h3').textContent.toLowerCase();
+    const cDept=card.dataset.dept;
+    const cAvail=card.dataset.avail;
+    const nameOk=!name||h3.includes(name);
+    const deptOk=!dept||cDept===dept;
+    const availOk=!avail||cAvail===avail;
+    card.style.display=nameOk&&deptOk&&availOk?'':'none';
+  });
+}
+
+/* ── MODAL ── */
+function openModal(doctorName,dept,pkg){
+  const overlay=document.getElementById('modal-overlay');
+  document.getElementById('modalBookingForm').style.display='block';
+  document.getElementById('modalSuccess').style.display='none';
+  if(dept) document.getElementById('m_dept').value=dept;
+  if(pkg) document.getElementById('m_dept').value=pkg;
+  // Set today+1 as default date
+  const d=new Date();d.setDate(d.getDate()+1);
+  document.getElementById('m_date').value=d.toISOString().split('T')[0];
+  overlay.classList.add('open');
+}
+function closeModal(){document.getElementById('modal-overlay').classList.remove('open');}
+function closeModalOutside(e){if(e.target===document.getElementById('modal-overlay')) closeModal();}
+function submitModal(){
+  const name=document.getElementById('m_name').value.trim();
+  const phone=document.getElementById('m_phone').value.trim();
+  const dept=document.getElementById('m_dept').value;
+  if(!name||!phone||!dept){alert('Please fill Name, Mobile and Department.');return;}
+  document.getElementById('modalBookingForm').style.display='none';
+  document.getElementById('modalSuccess').style.display='block';
+  document.getElementById('bookingRef').textContent='Booking ID: LCH-2025-'+Math.floor(1000+Math.random()*9000);
+}
+
+/* ── APPOINTMENT FORM ── */
+function submitAppointmentForm(){
+  const fname=document.getElementById('af_fname').value.trim();
+  const phone=document.getElementById('af_phone').value.trim();
+  const dept=document.getElementById('af_dept').value;
+  const date=document.getElementById('af_date').value;
+  if(!fname||!phone||!dept||!date){alert('Please fill all required fields (*).');return;}
+  openModal();
+  document.getElementById('m_name').value=fname+' '+(document.getElementById('af_lname').value||'');
+  document.getElementById('m_phone').value=phone;
+  document.getElementById('m_dept').value=dept;
+  submitModal();
+}
+
+/* ── STRIP ITEM ACTIVE ── */
+document.querySelectorAll('.strip-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    document.querySelectorAll('.strip-item').forEach(i=>i.classList.remove('active'));
+    item.classList.add('active');
+  });
+});
+
+/* ── SET MIN DATE ── */
+window.addEventListener('load',()=>{
+  const today=new Date().toISOString().split('T')[0];
+  document.querySelectorAll('input[type=date]').forEach(i=>i.min=today);
+});
+</script>
+</body>
+</html>
